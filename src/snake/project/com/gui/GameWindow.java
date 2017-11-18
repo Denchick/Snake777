@@ -14,8 +14,6 @@ public class GameWindow extends JFrame {
         setSize(game.getMap().Width * cellSize, game.getMap().Height * cellSize);
         setLocationRelativeTo(null);
         setResizable(false);
-        add(new Layout(game, cellSize));
-        addKeyListener(new KeyController(game));
         setVisible(true);
     }
 

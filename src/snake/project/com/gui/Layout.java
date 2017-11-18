@@ -26,14 +26,15 @@ public class Layout extends JPanel{
         if(game.isOver()){
             String str = "Game Over";
             g.setColor(Color.white);
-            g.drawString(str,125,game.getMap().Width / 2);
+            g.drawString(str,game.getMap().Width * cellSize / 3, game.getMap().Height * cellSize / 3);
         } else {
             Food food = game.GetFood();
             List<Point> snakeCoordinates = game.GetSnake().getListCoordinates();
             g.setColor(Color.RED);
-            g.fillRect(food.getCoordinates().x, food.getCoordinates().y, cellSize, cellSize);
+            g.fillRect(food.getCoordinates().x * cellSize, food.getCoordinates().y * cellSize, cellSize, cellSize);
+            g.setColor(Color.GREEN);
             for (Point coordinate : snakeCoordinates) {
-                g.fillRect(coordinate.x, coordinate.y, cellSize, cellSize);
+                g.fillRect(coordinate.x * cellSize, coordinate.y * cellSize, cellSize, cellSize);
             }
         }
     }

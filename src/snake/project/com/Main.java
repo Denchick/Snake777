@@ -2,6 +2,7 @@ package snake.project.com;
 
 import snake.project.com.gui.GameWindow;
 import snake.project.com.architecture.Game;
+import snake.project.com.gui.KeyController;
 import snake.project.com.gui.Layout;
 
 import java.awt.*;
@@ -16,20 +17,28 @@ public class Main {
         Game game = new Game(WIDTH, HEIGHT);
         GameWindow window = new GameWindow(game, CELL);
         Layout layout = new Layout(game, CELL);
-        window.getContentPane().add(BorderLayout.CENTER, layout);
+        window.add(BorderLayout.CENTER, layout);
+        window.addKeyListener(new KeyController(game));
 
         while (true) {
-            if (game.isPause || game.isOver())
-                game.oneStep();
-            layout.repaint();
             try {
                 Thread.sleep(500);
-            } catch (InterruptedException exception) {
-                Thread.currentThread().interrupt();
-                return;
-            } catch (Exception exception) {
-                break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            if (game.isPause || game.isOver()) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException exception) {
+                    Thread.currentThread().interrupt();
+                    return;
+                } catch (Exception exception) {
+                    break;
+                }
+            }
+            game.oneStep();
+            layout.repaint();
+
         }
     }
 }

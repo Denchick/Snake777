@@ -13,9 +13,9 @@ import java.util.List;
 public class Game
 {
     private Map map;
-    private boolean isOver;
-    public Direction snakeDirection;
-    public boolean isPause;
+    private boolean isOver = false;
+    public Direction snakeDirection = Direction.Right;
+    public boolean isPause = false;
 
     public Game(int width, int height) {
         map = new Map(width, height);
@@ -47,7 +47,7 @@ public class Game
         Point rightDot = new Point(center.x + 1, center.y);
         List<Point> coordinates =  Arrays.asList(leftDot, center, rightDot);
 
-        Snake snake = new Snake(rightDot, coordinates);
+        Snake snake = new Snake(coordinates);
         map.SetCreatureOnMap(snake);
     }
     

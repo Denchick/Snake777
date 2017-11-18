@@ -4,5 +4,6 @@ import java.awt.*;
 import java.util.List;
 
 interface IPointSequence extends ICreature {
-    List<Point> getListCoordinates();
+
+  List<Point> getListCoordinates();
 }

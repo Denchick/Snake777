@@ -1,20 +1,35 @@
 package snake.project.com;
 
 import snake.project.com.gui.GameWindow;
-import snake.project.com.gui.Gui;
 import snake.project.com.architecture.Game;
-import snake.project.com.gui.KeyController;
+import snake.project.com.gui.Layout;
 
-import javax.swing.*;
+import java.awt.*;
 
 public class Main {
 
-    private static final int MAIN_FRAME_WIDTH = 640;
-    private static final int MAIN_FRAME_HEIGHT = 480;
+    private static final int WIDTH = 32;
+    private static final int HEIGHT = 24;
+    private static final int CELL = 20;
 
     public static void main(String[] args) {
-        Game game = new Game(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
-        GameWindow window = new GameWindow(game);
-        game.Start();
+        Game game = new Game(WIDTH, HEIGHT);
+        GameWindow window = new GameWindow(game, CELL);
+        Layout layout = new Layout(game, CELL);
+        window.getContentPane().add(BorderLayout.CENTER, layout);
+
+        while (true) {
+            if (game.isPause || game.isOver())
+                game.oneStep();
+            layout.repaint();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException exception) {
+                Thread.currentThread().interrupt();
+                return;
+            } catch (Exception exception) {
+                break;
+            }
+        }
     }
 }

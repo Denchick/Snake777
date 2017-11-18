@@ -3,19 +3,20 @@ package snake.project.com.gui;
 import snake.project.com.architecture.Game;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class GameWindow {
+public class GameWindow extends JFrame {
 
 
-    public GameWindow(Game game) {
-        JFrame window = new JFrame();
-        window.setTitle("Змейка");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(game.getMap().Width, game.getMap().Height);
-        window.setLocation(400, 400);
-        window.setResizable(false);
-
-        window.addKeyListener(new KeyController(game));
-        window.setVisible(true);
+    public GameWindow(Game game, int cellSize) {
+        setTitle("Змейка");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(game.getMap().Width * cellSize, game.getMap().Height * cellSize);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        add(new Layout(game, cellSize));
+        addKeyListener(new KeyController(game));
+        setVisible(true);
     }
+
 }

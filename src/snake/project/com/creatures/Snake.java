@@ -2,52 +2,52 @@ package snake.project.com.creatures;
 
 import snake.project.com.architecture.Direction;
 import snake.project.com.architecture.Game;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Snake implements IMovable, IPointSequence {
-    public Snake(List<Point> coordinates) {
-        throw new NotImplementedException();
-    }
+    private Point coordinates;
+    private List<Point> body;
 
     public Snake(Point head, List<Point> body) {
-
+        coordinates = head;
+        this.body = body;
     }
 
     @Override
-    public void move(Direction direction) {
-
-    }
-    @Override
-    public int GetPriorityForGameHandle() {
-        return 0;
+    public int getPriorityForGameHandle() {
+        return 10;
     }
 
     @Override
     public int getDrawingPriority() {
-        return 0;
+        return 10;
     }
 
     @Override
-    public boolean DeadInConflict(ICreature conflictedObject, Game game) {
+    public boolean deadInConflict(ICreature conflictedObject, Game game) {
         return false;
     }
 
     @Override
     public Point getCoordinates() {
-        return null;
+        return coordinates;
     }
 
     @Override
-    public void setCoordinates() {
-
+    public void setCoordinates(Point coordinates) {
+        this.coordinates = coordinates;
     }
 
     @Override
-    public ArrayList<Point> getListCoordinates() {
-        return null;
+    public List<Point> getListCoordinates() {
+        return body;
+    }
+
+    @Override
+    public void makeMove(Direction direction) {
+
     }
 }

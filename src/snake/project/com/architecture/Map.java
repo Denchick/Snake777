@@ -1,8 +1,6 @@
 package snake.project.com.architecture;
 
-import jdk.jshell.spi.ExecutionControl;
 import snake.project.com.creatures.ICreature;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,19 +12,23 @@ public class Map {
     public ArrayList<ICreature> Creatures;
 
     public Map(int width, int height) {
+        Creatures = new ArrayList<>();
         Width = width;
         Height = height;
     }
 
     public void SetCreatureOnMap(ICreature creature) {
-        throw new NotImplementedException();
+        if (!IsEmpty(creature.getCoordinates())) {
+            throw new IllegalArgumentException("Impossible to put creature by this coordinates.");
+        }
+        Creatures.add(creature);
     }
 
     public void DeleteCreatureFromMap(int x, int y, ICreature creature)
     {
         for (int i = 0; i < Creatures.size(); i++)
         {
-            Point coordinates = e.getCoordinates();
+            Point coordinates = Creatures.get(i).getCoordinates();
             if (coordinates.x == x && coordinates.y == y &&
                     creature.getClass().getName() == Creatures.get(i).getClass().getName()) {
                 Creatures.remove(i);
@@ -35,11 +37,16 @@ public class Map {
     }
 
     public boolean IsEmpty(Point coordinates) {
-        throw new NotImplementedException();
+        for (ICreature creature: Creatures)
+            if (creature.getCoordinates() == coordinates)
+                return false;
+        return true;
     }
 
     public ICreature GetElementByCoordinates(Point coordinates) {
-        throw new NotImplementedException();
+        for (ICreature creature : Creatures)
+            if (creature.getCoordinates() == coordinates)
+                return creature;
+        return null;
     }
-
 }

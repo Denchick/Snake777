@@ -6,28 +6,30 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Wall implements ICreature {
+    private Point coordinates;
+
     @Override
-    public int GetPriorityForGameHandle() {
-        return 0;
+    public int getPriorityForGameHandle() {
+        return 20;
     }
 
     @Override
     public int getDrawingPriority() {
-        return 0;
+        return 20;
     }
 
     @Override
-    public boolean DeadInConflict(ICreature conflictedObject, Game game) {
+    public boolean deadInConflict(ICreature conflictedObject, Game game) {
         return false;
     }
 
     @Override
     public Point getCoordinates() {
-        return null;
+        return coordinates;
     }
 
     @Override
-    public void setCoordinates() {
-
+    public void setCoordinates(Point coordinates) {
+        this.coordinates = coordinates;
     }
 }

@@ -18,7 +18,7 @@ public class Game {
   public Direction snakeDirection = Direction.Right;
   public Direction lastDirection = snakeDirection;
   private boolean isPause = false;
-
+  private boolean needToIncreaseSnake = false;
   public Map getMap() {
     return map;
   }
@@ -114,9 +114,7 @@ public class Game {
 
   private boolean checkFoodWasEaten() {
     Food food = getFood();
-    if (food == null) {
-      return true;
-    }
+    if (food == null) return true;
     return (getSnake().getHeadCoordinates().x == food.getCoordinates().x &&
             getSnake().getHeadCoordinates().y == food.getCoordinates().y);
   }
@@ -153,18 +151,16 @@ public class Game {
   }
 
   public void makeOneStep() {
-    if (isOver) {
-      return;
-    }
+    if (isOver) return;
     Snake snake = getSnake();
-    if (checkFoodWasEaten()) {
-      createFoodOnMap();
-    }
-    boolean needToIncreaseSnake = false;
-    Point snakeTail = getSnake().getTailCoordinates();
-    if (checkFoodReachedTheEndOfSnake()) {
-      needToIncreaseSnake = true;
-    }
+    snake.makeMove(snakeDirection);
+    lastDirection = snakeDirection;
+    if (checkFoodWasEaten()) createFoodOnMap();
+
+    if (needToIncreaseSnake) snake.increase();
+    if (checkFoodReachedTheEndOfSnake()) needToIncreaseSnake = true;
+    else needToIncreaseSnake = false;
+
     if (checkSnakeCollisionsExists()) {
       isOver = true;
       return;
@@ -173,10 +169,10 @@ public class Game {
       isOver = true;
       return;
     }
-    snake.makeMove(snakeDirection);
-    lastDirection = snakeDirection;
+
     if (needToIncreaseSnake) {
       snake.increase();
+      needToIncreaseSnake = false;
     }
   }
 }

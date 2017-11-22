@@ -25,7 +25,7 @@ public class Layout extends JPanel {
     if (game.isOver()) {
       String str = "Game Over";
       g.setColor(Color.white);
-      g.drawString(str, game.getMap().Width * cellSize / 2 - 50, game.getMap().Height * cellSize / 2 - 40);
+      g.drawString(str, game.getMap().Width * cellSize / 2 - 40 , game.getMap().Height * cellSize / 2);
     } else {
       Food food = game.getFood();
       Wall wall = game.getWall();

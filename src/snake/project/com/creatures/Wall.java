@@ -3,7 +3,6 @@ package snake.project.com.creatures;
 import snake.project.com.architecture.Game;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Wall implements ICreature {
 

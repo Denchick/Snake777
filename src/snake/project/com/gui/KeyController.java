@@ -24,16 +24,24 @@ public class KeyController implements KeyListener {
   public void keyPressed(KeyEvent e) {
     switch (e.getKeyCode()) {
       case KeyEvent.VK_UP:
-        game.snakeDirection = Direction.Up;
+        if (game.lastDirection != Direction.Down){
+          game.snakeDirection = Direction.Up;
+        }
         break;
       case KeyEvent.VK_DOWN:
-        game.snakeDirection = Direction.Down;
+        if(game.lastDirection != Direction.Up) {
+          game.snakeDirection = Direction.Down;
+        }
         break;
       case KeyEvent.VK_LEFT:
-        game.snakeDirection = Direction.Left;
+        if (game.lastDirection != Direction.Right) {
+          game.snakeDirection = Direction.Left;
+        }
         break;
       case KeyEvent.VK_RIGHT:
-        game.snakeDirection = Direction.Right;
+        if (game.lastDirection != Direction.Left){
+          game.snakeDirection = Direction.Right;
+        }
         break;
     }
   }

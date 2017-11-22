@@ -22,13 +22,13 @@ public class Main {
 
     while (true) {
       try {
-        Thread.sleep(500);
+        Thread.sleep(300);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
       if (game.isPause() || game.isOver()) {
         try {
-          Thread.sleep(500);
+          Thread.sleep(300);
         } catch (InterruptedException exception) {
           Thread.currentThread().interrupt();
           return;
@@ -36,9 +36,8 @@ public class Main {
           break;
         }
       }
-      game.makeOneStep();
       layout.repaint();
-
+      game.makeOneStep();
     }
   }
 }

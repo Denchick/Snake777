@@ -2,6 +2,7 @@ package snake.project.com.creatures;
 
 import snake.project.com.architecture.Direction;
 import snake.project.com.architecture.Game;
+import snake.project.com.architecture.Map;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -73,8 +74,12 @@ public class Snake implements IMovable, IPointSequence {
       coordinates.x += 1;
     } else if (direction == Direction.Down) {
       coordinates.y += 1;
-    } else {
+    } else if (direction == Direction.Up){
       coordinates.y -= 1;
     }
+  }
+
+  public void increase() {
+    body.add(0, new Point(getTailCoordinates()));
   }
 }

@@ -2,9 +2,11 @@ package snake.project.com.architecture;
 
 import snake.project.com.creatures.Snake;
 import snake.project.com.creatures.Food;
+import snake.project.com.creatures.Wall;
 import snake.project.com.creatures.ICreature;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class Game {
   private Map map;
   private boolean isOver = false;
   public Direction snakeDirection = Direction.Right;
+  public Direction lastDirection = snakeDirection;
   private boolean isPause = false;
 
   public Map getMap() {
@@ -21,7 +24,13 @@ public class Game {
   }
 
   public boolean isOver() {
-    return isOver;
+    if (getSnake().getHeadCoordinates().x >= map.Width || getSnake().getHeadCoordinates().x < 0 ||
+            getSnake().getHeadCoordinates().y >= map.Height || getSnake().getHeadCoordinates().y < 0){
+      return true;
+    }
+    else{
+      return isOver;
+    }
   }
 
   public boolean isPause() {
@@ -46,11 +55,21 @@ public class Game {
     return null;
   }
 
+  public Wall getWall() {
+    for (ICreature creature : map.Creatures) {
+      if (creature instanceof Wall) {
+        return (Wall) creature;
+      }
+    }
+    return null;
+  }
+
 
   public Game(int width, int height) {
     map = new Map(width, height);
     createSnakeOnMap();
     createFoodOnMap();
+    createWallOnMap();
   }
 
 
@@ -67,11 +86,27 @@ public class Game {
     }
   }
 
+  private void createWallOnMap() {
+    while (true) {
+      Point coordinates = new Point(
+              (int) (Math.random() * map.Width),
+              (int) (Math.random() * map.Height));
+      if (map.IsEmpty(coordinates)) {
+        Wall wall = new Wall(coordinates);
+        map.SetCreatureOnMap(wall);
+        break;
+      }
+    }
+  }
+
   private void createSnakeOnMap() {
     Point center = new Point(map.Width / 2, map.Height / 2);
     Point leftDot = new Point(center.x - 1, center.y);
     Point rightDot = new Point(center.x + 1, center.y);
-    List<Point> coordinates = Arrays.asList(leftDot, center, rightDot);
+    List<Point> coordinates = new ArrayList<Point>();
+    coordinates.add(leftDot);
+    coordinates.add(center);
+    coordinates.add(rightDot);
 
     Snake snake = new Snake(coordinates);
     map.SetCreatureOnMap(snake);
@@ -82,7 +117,8 @@ public class Game {
     if (food == null) {
       return true;
     }
-    return getSnake().getHeadCoordinates() == food.getCoordinates();
+    return (getSnake().getHeadCoordinates().x == food.getCoordinates().x &&
+            getSnake().getHeadCoordinates().y == food.getCoordinates().y);
   }
 
   private boolean checkFoodReachedTheEndOfSnake() {
@@ -90,7 +126,18 @@ public class Game {
     if (food == null) {
       return true;
     }
-    return getSnake().getTailCoordinates() == food.getCoordinates();
+    else if (getSnake().getTailCoordinates().x == food.getCoordinates().x &&
+            getSnake().getTailCoordinates().y == food.getCoordinates().y){
+      map.DeleteCreatureFromMap(food.getCoordinates().x, food.getCoordinates().y, food);
+      return true;
+    }
+    return false;
+  }
+
+  private boolean checkWallHitSnake() {
+    Wall wall = getWall();
+    return wall.getCoordinates().x == getSnake().getHeadCoordinates().x &&
+            wall.getCoordinates().y == getSnake().getHeadCoordinates().y;
   }
 
   private boolean checkSnakeCollisionsExists() {
@@ -122,9 +169,14 @@ public class Game {
       isOver = true;
       return;
     }
+    if (checkWallHitSnake()){
+      isOver = true;
+      return;
+    }
     snake.makeMove(snakeDirection);
+    lastDirection = snakeDirection;
     if (needToIncreaseSnake) {
-      snake.getListCoordinates().add(0, snakeTail);
+      snake.increase();
     }
   }
 }

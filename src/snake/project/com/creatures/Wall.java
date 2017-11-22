@@ -9,6 +9,14 @@ public class Wall implements ICreature {
 
   private Point coordinates;
 
+  public Wall(int x, int y) {
+    this.coordinates = new Point(x, y);
+  }
+
+  public Wall(Point coordinates) {
+    this.coordinates = coordinates;
+  }
+
   @Override
   public int getPriorityForGameHandle() {
     return 20;

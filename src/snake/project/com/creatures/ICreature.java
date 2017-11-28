@@ -10,8 +10,6 @@ public interface ICreature {
 
   int getDrawingPriority();
 
-  boolean deadInConflict(ICreature conflictedObject, Game game);
-
   Point getCoordinates();
 
   void setCoordinates(Point coordinates);

@@ -142,7 +142,9 @@ public class Game {
     List<Point> snakeCoordinates = getSnake().getListCoordinates();
     for (int i = 0; i < snakeCoordinates.size(); i++) {
       for (int j = 0; j < snakeCoordinates.size(); j++) {
-        if (i != j && snakeCoordinates.get(i) == snakeCoordinates.get(j)) {
+        if (i != j &&
+            snakeCoordinates.get(i).x == snakeCoordinates.get(j).x &&
+            snakeCoordinates.get(i).y == snakeCoordinates.get(j).y) {
           return true;
         }
       }

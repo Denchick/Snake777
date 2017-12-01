@@ -1,28 +1,21 @@
 package snake.project.com.creatures;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Queue;
 import java.util.LinkedList;
 import snake.project.com.architecture.Direction;
-import snake.project.com.architecture.Game;
-import snake.project.com.architecture.Map;
 import snake.project.com.architecture.Point;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Snake implements IMovable, IPointSequence {
 
-  private Point coordinates;
-  private Queue<Point> eatenFood = new LinkedList<Point>();
-  private List<Point> body;
+  private final SnakeHead head;
+  private final SnakeBody body;
   public Direction snakeDirection = Direction.Right;
-
-  public Snake(List<Point> body) {
-    coordinates = body.get(body.size() - 1);
-    this.body = body;
-  }
-
+  public Queue<Point> eatenFood = new ArrayDeque<Point>();
   @Override
   public int getPriorityForGameHandle() {
     return 10;
@@ -35,12 +28,12 @@ public class Snake implements IMovable, IPointSequence {
 
   @Override
   public Point getCoordinates() {
-    return coordinates;
+    return head.coordinates;
   }
 
   @Override
   public void setCoordinates(Point coordinates) {
-    this.coordinates = coordinates;
+    this.head.coordinates = coordinates;
   }
 
   @Override
@@ -49,18 +42,10 @@ public class Snake implements IMovable, IPointSequence {
   }
 
   @Override
-  public List<Point> getListCoordinates() {
-    return body;
-  }
-
-  public Point getHeadCoordinates() {
-    int lastIndex = getListCoordinates().size() - 1;
-    Point coordinates = getListCoordinates().get(lastIndex);
-    return new Point(coordinates.getX(), coordinates.getY());
-  }
+  public List<Point> getBodyCoordinates() { return body.coordinates; }
 
   public Point getTailCoordinates() {
-    return new Point(getListCoordinates().get(0).getX(), getListCoordinates().get(0).getY());
+    return new Point(getBodyCoordinates().get(0).getX(), getBodyCoordinates().get(0).getY());
   }
 
   @Override
@@ -73,25 +58,50 @@ public class Snake implements IMovable, IPointSequence {
     return snakeDirection;
   }
 
-  @Override
-  public void makeMove(Direction direction) {
-    for (int i = 0; i < getListCoordinates().size() - 1; i++) {
-      Point currentCoordinate = getListCoordinates().get(i);
-      currentCoordinate.setCoordinates(getListCoordinates().get(i + 1));
-    }
+  public Snake(List<Point> snake) {
+    int headIndex = snake.size() - 1;
+    this.head = new SnakeHead(snake.get(headIndex));
+    this.body = new SnakeBody(snake);
+    this.body.coordinates.remove(headIndex);
+  }
 
-    if (direction == Direction.Left) {
-      coordinates.setX(coordinates.getX() - 1);
-    } else if (direction == Direction.Right) {
-      coordinates.setX(coordinates.getX() + 1);
-    } else if (direction == Direction.Down) {
-      coordinates.setY(coordinates.getY() + 1);
-    } else if (direction == Direction.Up){
-      coordinates.setY(coordinates.getY() - 1);
+
+  public Point getHeadCoordinates() { return this.head.coordinates; }
+
+  @Override
+  public void makeMove() {
+    body.coordinates.remove(0);
+    body.coordinates.add(new Point(head.coordinates));
+
+    if (snakeDirection == Direction.Left) {
+      head.coordinates.setX(head.coordinates.getX() - 1);
+    } else if (snakeDirection == Direction.Right) {
+      head.coordinates.setX(head.coordinates.getX() + 1);
+    } else if (snakeDirection == Direction.Down) {
+      head.coordinates.setY(head.coordinates.getY() + 1);
+    } else if (snakeDirection == Direction.Up){
+      head.coordinates.setY(head.coordinates.getY() - 1);
     }
   }
 
   public void increase() {
-    body.add(0, new Point(getTailCoordinates()));
+    body.coordinates.add(0, new Point(getTailCoordinates()));
+  }
+}
+
+
+class SnakeBody {
+  public List<Point> coordinates;
+
+  public SnakeBody(List<Point> snake) {
+    coordinates = snake;
+  }
+}
+
+class SnakeHead {
+  public Point coordinates;
+
+  public SnakeHead(Point point) {
+    coordinates = new Point(point);
   }
 }

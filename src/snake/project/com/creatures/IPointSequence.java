@@ -7,5 +7,5 @@ import snake.project.com.architecture.Point;
 
 public interface IPointSequence extends ICreature {
 
-  List<Point> getListCoordinates();
+  List<Point> getBodyCoordinates();
 }

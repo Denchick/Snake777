@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class Main {
 
-  private static final int WIDTH = 28;
+  private static final int WIDTH = 20;
   private static final int HEIGHT = 20;
   private static final int CELL = 30;
 
@@ -22,13 +22,13 @@ public class Main {
 
     while (true) {
       try {
-        Thread.sleep(200);
+        Thread.sleep(500);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
       if (game.isPause() || game.isOver()) {
         try {
-          Thread.sleep(200);
+          Thread.sleep(500);
         } catch (InterruptedException exception) {
           Thread.currentThread().interrupt();
           return;

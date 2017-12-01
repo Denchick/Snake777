@@ -2,15 +2,13 @@ package snake.project.com.gui;
 
 import snake.project.com.architecture.Game;
 import snake.project.com.architecture.Point;
-import snake.project.com.creatures.Food;
 import snake.project.com.creatures.ICreature;
-import snake.project.com.creatures.Wall;
 import snake.project.com.creatures.IPointSequence;
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import snake.project.com.creatures.Snake;
 
 public class Layout extends JPanel {
 
@@ -27,7 +25,7 @@ public class Layout extends JPanel {
   public void paint(Graphics g) {
     super.paint(g);
 
-    for (ICreature creature: game.getMap().Creatures) {
+    for (ICreature creature: game.getMap().creatures) {
      paintCreature(creature, g);
     }
 
@@ -46,11 +44,18 @@ public class Layout extends JPanel {
 
   private void paintCreature(ICreature creature, Graphics g) {
     if (creature instanceof IPointSequence) {
-      for (Point coordinates: ((IPointSequence) creature).getListCoordinates()) {
+      for (Point coordinates: ((IPointSequence) creature).getBodyCoordinates()) {
         paintCell(coordinates, creature.getColor(), g);
       }
     } else {
       paintCell(creature.getCoordinates(), creature.getColor(), g);
+    }
+    if (creature instanceof Snake) {
+      paintCell(((Snake) creature).getHeadCoordinates(), creature.getColor(), g);
+      for (Point eatenFood: ((Snake) creature).eatenFood)
+      {
+        paintCell(eatenFood, Color.cyan, g);
+      }
     }
   }
 }

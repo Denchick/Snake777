@@ -46,4 +46,8 @@ public class Point {
     this.x = coordinates.getX();
     this.y = coordinates.getY();
   }
+
+  public String toString() {
+    return "(" + this.x + ", " + this.y + ")";
+  }
 }

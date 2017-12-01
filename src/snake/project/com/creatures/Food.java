@@ -5,9 +5,11 @@ import snake.project.com.architecture.Point;
 
 import java.awt.*;
 
-public class Food implements ICreature {
+public class Food implements ICreature, IFood {
 
   private Point coordinates;
+  private Color color = Color.RED;
+  private boolean isWasEaten = false;
 
   public Food(int x, int y) {
     this.coordinates = new Point(x, y);
@@ -38,7 +40,22 @@ public class Food implements ICreature {
   }
 
   @Override
+  public boolean getIsWasEaten() {
+    return isWasEaten;
+  }
+
+  @Override
+  public void setIsWasEaten() {
+    isWasEaten = true;
+  }
+
+  @Override
   public Color getColor() {
-    return Color.RED;
+    return color;
+  }
+
+  @Override
+  public Color getColorWhenWasEaten() {
+    return null;
   }
 }

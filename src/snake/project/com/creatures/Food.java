@@ -36,4 +36,9 @@ public class Food implements ICreature {
   public void setCoordinates(Point coordinates) {
     this.coordinates = coordinates;
   }
+
+  @Override
+  public Color getColor() {
+    return Color.RED;
+  }
 }

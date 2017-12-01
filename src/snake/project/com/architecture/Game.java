@@ -21,18 +21,9 @@ public class Game {
     return map;
   }
 
-  public boolean isOver() {
-    if (map.pointWithinMapBorders(getSnake().getHeadCoordinates())){
-      return true;
-    }
-    else {
-      return isOver;
-    }
-  }
+  public boolean isOver() { return isOver;}
 
-  public boolean isPause() {
-    return isPause;
-  }
+  public boolean isPause() { return isPause; }
 
   public Snake getSnake() {
     for (ICreature creature : map.Creatures) {
@@ -169,5 +160,7 @@ public class Game {
       snake.increase();
       needToIncreaseSnake = false;
     }
+
+    isOver = map.pointWithinMapBorders(getSnake().getHeadCoordinates());
   }
 }

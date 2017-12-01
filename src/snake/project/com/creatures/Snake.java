@@ -1,5 +1,7 @@
 package snake.project.com.creatures;
 
+import java.util.Queue;
+import java.util.LinkedList;
 import snake.project.com.architecture.Direction;
 import snake.project.com.architecture.Game;
 import snake.project.com.architecture.Map;
@@ -12,6 +14,7 @@ import java.util.List;
 public class Snake implements IMovable, IPointSequence {
 
   private Point coordinates;
+  private Queue<Point> eatenFood = new LinkedList<Point>();
   private List<Point> body;
   public Direction snakeDirection = Direction.Right;
 
@@ -38,6 +41,11 @@ public class Snake implements IMovable, IPointSequence {
   @Override
   public void setCoordinates(Point coordinates) {
     this.coordinates = coordinates;
+  }
+
+  @Override
+  public Color getColor() {
+    return Color.GREEN;
   }
 
   @Override

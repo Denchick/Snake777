@@ -3,6 +3,7 @@ package snake.project.com.creatures;
 import snake.project.com.architecture.Direction;
 import snake.project.com.architecture.Game;
 import snake.project.com.architecture.Map;
+import snake.project.com.architecture.Point;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -47,11 +48,11 @@ public class Snake implements IMovable, IPointSequence {
   public Point getHeadCoordinates() {
     int lastIndex = getListCoordinates().size() - 1;
     Point coordinates = getListCoordinates().get(lastIndex);
-    return new Point(coordinates.x, coordinates.y);
+    return new Point(coordinates.getX(), coordinates.getY());
   }
 
   public Point getTailCoordinates() {
-    return new Point(getListCoordinates().get(0).x, getListCoordinates().get(0).y);
+    return new Point(getListCoordinates().get(0).getX(), getListCoordinates().get(0).getY());
   }
 
   @Override
@@ -67,21 +68,18 @@ public class Snake implements IMovable, IPointSequence {
   @Override
   public void makeMove(Direction direction) {
     for (int i = 0; i < getListCoordinates().size() - 1; i++) {
-      // DO NOT TOUCH!
       Point currentCoordinate = getListCoordinates().get(i);
-      Point nextCoordinate = getListCoordinates().get(i + 1);
-      currentCoordinate.x = nextCoordinate.x;
-      currentCoordinate.y = nextCoordinate.y;
+      currentCoordinate.setCoordinates(getListCoordinates().get(i + 1));
     }
 
     if (direction == Direction.Left) {
-      coordinates.x -= 1;
+      coordinates.setX(coordinates.getX() - 1);
     } else if (direction == Direction.Right) {
-      coordinates.x += 1;
+      coordinates.setX(coordinates.getX() + 1);
     } else if (direction == Direction.Down) {
-      coordinates.y += 1;
+      coordinates.setY(coordinates.getY() + 1);
     } else if (direction == Direction.Up){
-      coordinates.y -= 1;
+      coordinates.setY(coordinates.getY() - 1);
     }
   }
 

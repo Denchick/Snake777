@@ -1,6 +1,7 @@
 package snake.project.com.gui;
 
 import snake.project.com.architecture.Game;
+import snake.project.com.architecture.Point;
 import snake.project.com.creatures.Food;
 import snake.project.com.creatures.Wall;
 
@@ -31,12 +32,12 @@ public class Layout extends JPanel {
       Wall wall = game.getWall();
       List<Point> snakeCoordinates = game.getSnake().getListCoordinates();
       g.setColor(Color.RED);
-      g.fillRect(food.getCoordinates().x * cellSize, food.getCoordinates().y * cellSize, cellSize, cellSize);
+      g.fillRect(food.getCoordinates().getX() * cellSize, food.getCoordinates().getY() * cellSize, cellSize, cellSize);
       g.setColor(Color.DARK_GRAY);
-      g.fillRect(wall.getCoordinates().x * cellSize, wall.getCoordinates().y * cellSize, cellSize, cellSize);
+      g.fillRect(wall.getCoordinates().getX() * cellSize, wall.getCoordinates().getY() * cellSize, cellSize, cellSize);
       g.setColor(Color.GREEN);
       for (Point coordinate : snakeCoordinates) {
-        g.fillRect(coordinate.x * cellSize, coordinate.y * cellSize, cellSize, cellSize);
+        g.fillRect(coordinate.getX() * cellSize, coordinate.getY() * cellSize, cellSize, cellSize);
       }
     }
   }

@@ -16,19 +16,16 @@ public class Game {
   private Map map;
   private boolean isOver = false;
   private boolean isPause = false;
-  //public Direction snakeDirection = Direction.Right;
-  //public Direction lastDirection = snakeDirection;
   private boolean needToIncreaseSnake = false;
   public Map getMap() {
     return map;
   }
 
   public boolean isOver() {
-    if (getSnake().getHeadCoordinates().x >= map.Width || getSnake().getHeadCoordinates().x < 0 ||
-            getSnake().getHeadCoordinates().y >= map.Height || getSnake().getHeadCoordinates().y < 0){
+    if (map.pointWithinMapBorders(getSnake().getHeadCoordinates())){
       return true;
     }
-    else{
+    else {
       return isOver;
     }
   }
@@ -101,8 +98,8 @@ public class Game {
 
   private void createSnakeOnMap() {
     Point center = new Point(map.Width / 2, map.Height / 2);
-    Point leftDot = new Point(center.x - 1, center.y);
-    Point rightDot = new Point(center.x + 1, center.y);
+    Point leftDot = new Point(center.getX() - 1, center.getY());
+    Point rightDot = new Point(center.getX() + 1, center.getY());
     List<Point> coordinates = new ArrayList<Point>();
     coordinates.add(leftDot);
     coordinates.add(center);
@@ -115,8 +112,7 @@ public class Game {
   private boolean checkFoodWasEaten() {
     Food food = getFood();
     if (food == null) return true;
-    return (getSnake().getHeadCoordinates().x == food.getCoordinates().x &&
-            getSnake().getHeadCoordinates().y == food.getCoordinates().y);
+    return getSnake().getHeadCoordinates().equals(food.getCoordinates());
   }
 
   private boolean checkFoodReachedTheEndOfSnake() {
@@ -124,9 +120,8 @@ public class Game {
     if (food == null) {
       return true;
     }
-    else if (getSnake().getTailCoordinates().x == food.getCoordinates().x &&
-            getSnake().getTailCoordinates().y == food.getCoordinates().y){
-      map.DeleteCreatureFromMap(food.getCoordinates().x, food.getCoordinates().y, food);
+    else if (getSnake().getTailCoordinates().equals(food.getCoordinates())){
+      map.DeleteCreatureFromMap(food.getCoordinates(), food);
       return true;
     }
     return false;
@@ -134,17 +129,14 @@ public class Game {
 
   private boolean checkWallHitSnake() {
     Wall wall = getWall();
-    return wall.getCoordinates().x == getSnake().getHeadCoordinates().x &&
-            wall.getCoordinates().y == getSnake().getHeadCoordinates().y;
+    return wall.getCoordinates().equals(getSnake().getHeadCoordinates());
   }
 
   private boolean checkSnakeCollisionsExists() {
     List<Point> snakeCoordinates = getSnake().getListCoordinates();
     for (int i = 0; i < snakeCoordinates.size(); i++) {
       for (int j = 0; j < snakeCoordinates.size(); j++) {
-        if (i != j &&
-            snakeCoordinates.get(i).x == snakeCoordinates.get(j).x &&
-            snakeCoordinates.get(i).y == snakeCoordinates.get(j).y) {
+        if (i != j && snakeCoordinates.get(i).equals(snakeCoordinates.get(j))) {
           return true;
         }
       }
@@ -157,7 +149,6 @@ public class Game {
 
     Snake snake = getSnake();
     snake.makeMove(snake.getDirection());
-    //lastDirection = snakeDirection;
 
     if (checkFoodWasEaten()) createFoodOnMap();
 

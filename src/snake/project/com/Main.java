@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class Main {
 
-  private static final int WIDTH = 20;
-  private static final int HEIGHT = 20;
+  private static final int WIDTH = 22;
+  private static final int HEIGHT = 18;
   private static final int CELL = 30;
 
   public static void main(String[] args) {
@@ -22,13 +22,13 @@ public class Main {
 
     while (true) {
       try {
-        Thread.sleep(500);
+        Thread.sleep(200);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
       if (game.isPause() || game.isOver()) {
         try {
-          Thread.sleep(500);
+          Thread.sleep(200);
         } catch (InterruptedException exception) {
           Thread.currentThread().interrupt();
           return;

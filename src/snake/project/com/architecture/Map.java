@@ -36,12 +36,12 @@ public class Map {
 
   public boolean IsEmpty(Point coordinates) {
     for (ICreature creature : creatures) {
-      if (creature.getCoordinates() == coordinates) {
+      if (creature.getCoordinates().equals(coordinates)) {
         return false;
       }
       if (creature instanceof IPointSequence) {
         for (Point currentCoordinates : ((IPointSequence) creature).getBodyCoordinates()) {
-          if (currentCoordinates == coordinates)
+          if (currentCoordinates.equals(coordinates))
             return false;
         }
       }

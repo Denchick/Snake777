@@ -106,7 +106,9 @@ public class Game {
 
   private boolean checkFoodReachedTheEndOfSnake() {
     Point foodCoordinates = getSnake().eatenFood.peek();
-    return foodCoordinates != null && foodCoordinates.equals(getSnake().getTailCoordinates());
+    return foodCoordinates != null
+        && !getSnake().getHeadCoordinates().equals(foodCoordinates)
+        && !getSnake().getBodyCoordinates().contains(foodCoordinates);
   }
 
   private boolean checkWallHitSnake() {

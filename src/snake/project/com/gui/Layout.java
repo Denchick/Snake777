@@ -32,7 +32,7 @@ public class Layout extends JPanel {
     if (game.isOver()) {
       String str = "Game Over";
       g.setColor(Color.white);
-      g.drawString(str, game.getMap().Width * cellSize / 2 - 40 , game.getMap().Height * cellSize / 2);
+      g.drawString(str, game.getMap().Width * cellSize / 2 - 10 , game.getMap().Height * cellSize / 2 + 10);
     }
   }
 

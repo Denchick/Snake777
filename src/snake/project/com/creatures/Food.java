@@ -27,11 +27,6 @@ public class Food implements ICreature {
   }
 
   @Override
-  public boolean deadInConflict(ICreature conflictedObject, Game game) {
-    return false;
-  }
-
-  @Override
   public Point getCoordinates() {
     return coordinates;
   }

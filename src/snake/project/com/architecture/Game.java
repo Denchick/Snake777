@@ -15,9 +15,9 @@ public class Game {
 
   private Map map;
   private boolean isOver = false;
-  public Direction snakeDirection = Direction.Right;
-  public Direction lastDirection = snakeDirection;
   private boolean isPause = false;
+  //public Direction snakeDirection = Direction.Right;
+  //public Direction lastDirection = snakeDirection;
   private boolean needToIncreaseSnake = false;
   public Map getMap() {
     return map;
@@ -154,9 +154,11 @@ public class Game {
 
   public void makeOneStep() {
     if (isOver) return;
+
     Snake snake = getSnake();
-    snake.makeMove(snakeDirection);
-    lastDirection = snakeDirection;
+    snake.makeMove(snake.getDirection());
+    //lastDirection = snakeDirection;
+
     if (checkFoodWasEaten()) createFoodOnMap();
 
     if (needToIncreaseSnake) snake.increase();

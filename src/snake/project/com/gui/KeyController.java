@@ -2,6 +2,7 @@ package snake.project.com.gui;
 
 import snake.project.com.architecture.Direction;
 import snake.project.com.architecture.Game;
+import snake.project.com.creatures.Snake;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -10,9 +11,11 @@ import java.awt.event.KeyListener;
 public class KeyController implements KeyListener {
 
   private Game game;
+  private Snake snake;
 
   public KeyController(Game game) {
     this.game = game;
+    this.snake = game.getSnake();
   }
 
   @Override
@@ -24,23 +27,27 @@ public class KeyController implements KeyListener {
   public void keyPressed(KeyEvent e) {
     switch (e.getKeyCode()) {
       case KeyEvent.VK_UP:
-        if (game.lastDirection != Direction.Down){
-          game.snakeDirection = Direction.Up;
+        if (snake.getDirection() != Direction.Down){
+          //game.snakeDirection = Direction.Up;
+          snake.setDirection(Direction.Up);
         }
         break;
       case KeyEvent.VK_DOWN:
-        if(game.lastDirection != Direction.Up) {
-          game.snakeDirection = Direction.Down;
+        if(snake.getDirection() != Direction.Up) {
+          //game.snakeDirection = Direction.Down;
+          snake.setDirection(Direction.Down);
         }
         break;
       case KeyEvent.VK_LEFT:
-        if (game.lastDirection != Direction.Right) {
-          game.snakeDirection = Direction.Left;
+        if (snake.getDirection() != Direction.Right) {
+          //game.snakeDirection = Direction.Left;
+            snake.setDirection(Direction.Left);
         }
         break;
       case KeyEvent.VK_RIGHT:
-        if (game.lastDirection != Direction.Left){
-          game.snakeDirection = Direction.Right;
+        if (snake.getDirection() != Direction.Left){
+          //game.snakeDirection = Direction.Right;
+            snake.setDirection(Direction.Right);
         }
         break;
     }

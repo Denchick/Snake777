@@ -12,6 +12,7 @@ public class Snake implements IMovable, IPointSequence {
 
   private Point coordinates;
   private List<Point> body;
+  public Direction snakeDirection = Direction.Right;
 
   public Snake(List<Point> body) {
     coordinates = body.get(body.size() - 1);
@@ -26,11 +27,6 @@ public class Snake implements IMovable, IPointSequence {
   @Override
   public int getDrawingPriority() {
     return 10;
-  }
-
-  @Override
-  public boolean deadInConflict(ICreature conflictedObject, Game game) {
-    return false;
   }
 
   @Override
@@ -56,6 +52,16 @@ public class Snake implements IMovable, IPointSequence {
 
   public Point getTailCoordinates() {
     return new Point(getListCoordinates().get(0).x, getListCoordinates().get(0).y);
+  }
+
+  @Override
+  public void setDirection(Direction direction) {
+    snakeDirection = direction;
+  }
+
+  @Override
+  public Direction getDirection() {
+    return snakeDirection;
   }
 
   @Override

@@ -13,9 +13,7 @@ public interface ICreature {
 
   Point getCoordinates();
 
-
-
   void setCoordinates(Point coordinates);
 
-  Color getColor();
+  Image getImage();
 }

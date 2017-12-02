@@ -9,9 +9,9 @@ import java.awt.*;
 
 public class Main {
 
-  private static final int WIDTH = 22;
-  private static final int HEIGHT = 18;
-  private static final int CELL = 30;
+  public static final int WIDTH = 22;
+  public static final int HEIGHT = 18;
+  public static final int CELL = 30;
 
   public static void main(String[] args) {
     Game game = new Game(WIDTH, HEIGHT);

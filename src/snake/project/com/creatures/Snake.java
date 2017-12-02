@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.LinkedList;
+import javax.swing.ImageIcon;
 import snake.project.com.architecture.Direction;
 import snake.project.com.architecture.Point;
 
@@ -37,8 +38,8 @@ public class Snake implements IMovable, IPointSequence {
   }
 
   @Override
-  public Color getColor() {
-    return Color.GREEN;
+  public Image getImage() {
+    return null;
   }
 
   @Override
@@ -68,6 +69,9 @@ public class Snake implements IMovable, IPointSequence {
 
   public Point getHeadCoordinates() { return this.head.coordinates; }
 
+  public SnakeHead getHead() { return this.head; }
+  public SnakeBody getBody() { return this.body; }
+
   @Override
   public void makeMove() {
     body.coordinates.remove(0);
@@ -90,18 +94,3 @@ public class Snake implements IMovable, IPointSequence {
 }
 
 
-class SnakeBody {
-  public List<Point> coordinates;
-
-  public SnakeBody(List<Point> snake) {
-    coordinates = snake;
-  }
-}
-
-class SnakeHead {
-  public Point coordinates;
-
-  public SnakeHead(Point point) {
-    coordinates = new Point(point);
-  }
-}

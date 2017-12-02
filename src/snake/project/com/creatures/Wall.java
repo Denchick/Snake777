@@ -1,5 +1,6 @@
 package snake.project.com.creatures;
 
+import javax.swing.ImageIcon;
 import snake.project.com.architecture.Game;
 import snake.project.com.architecture.Point;
 
@@ -8,12 +9,15 @@ import java.awt.*;
 public class Wall implements ICreature {
 
   private Point coordinates;
+  private Image image ;
 
   public Wall(int x, int y) {
+    image = (new ImageIcon("images/wall.png")).getImage();
     this.coordinates = new Point(x, y);
   }
 
   public Wall(Point coordinates) {
+    image = (new ImageIcon("images/wall.png")).getImage();
     this.coordinates = coordinates;
   }
 
@@ -38,7 +42,7 @@ public class Wall implements ICreature {
   }
 
   @Override
-  public Color getColor() {
-    return Color.DARK_GRAY;
+  public Image getImage() {
+    return image;
   }
 }

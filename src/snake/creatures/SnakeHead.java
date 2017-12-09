@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class SnakeHead {
   private final Map<Direction, Image> imagesByDirection = new HashMap<>();
-  private Direction snakeDirection;
+  private Direction snakeDirection = Direction.Right;
   public Point coordinates;
 
   public Image getImage() {

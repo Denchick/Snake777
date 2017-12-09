@@ -37,8 +37,8 @@ public class main {
           break;
         }
       }
-      layout.repaint();
       game.makeOneStep();
+      layout.repaint();
     }
   }
 }

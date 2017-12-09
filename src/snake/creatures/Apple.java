@@ -7,15 +7,17 @@ import java.awt.*;
 public class Apple implements ICreature, IFood {
 
   private Point coordinates;
-  private Image image;
+  private Image image = (new ImageIcon("images/apple.png")).getImage();
+
+  public Apple() {
+    this.coordinates = new Point(0, 0);
+  }
 
   public Apple(int x, int y) {
     this.coordinates = new Point(x, y);
-    image = (new ImageIcon("images/apple.png")).getImage();
   }
 
   public Apple(Point coordinates) {
-    image = (new ImageIcon("images/apple.png")).getImage();
     this.coordinates = coordinates;
   }
 

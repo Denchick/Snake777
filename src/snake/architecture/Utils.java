@@ -5,7 +5,7 @@ import java.awt.Point;
 public final class Utils {
 
   private Utils() {
-    // типо статический класс
+    // типо бессмысленный статический класс
   }
 
   public static java.awt.Point GetCorrectCoordinates(Map map, int x, int y) {

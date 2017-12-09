@@ -7,15 +7,17 @@ import java.awt.*;
 
 public class Mushroom implements IFood, ICreature {
     private Point coordinates;
-    private Image image;
+    private Image image = (new ImageIcon("images/mushroom.png")).getImage();
+
+    public Mushroom() {
+        this.coordinates = new Point(0, 0);
+    }
 
     public Mushroom(int x, int y) {
         this.coordinates = new Point(x, y);
-        image = (new ImageIcon("images/mushroom.png")).getImage();
     }
 
     public Mushroom(Point coordinates) {
-        image = (new ImageIcon("images/mushroom.png")).getImage();
         this.coordinates = coordinates;
     }
 

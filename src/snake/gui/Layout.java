@@ -2,8 +2,10 @@ package snake.gui;
 
 import snake.architecture.Game;
 import snake.architecture.Point;
+import snake.creatures.EnemySnake;
 import snake.creatures.GoodSnake;
 import snake.creatures.ICreature;
+import snake.creatures.Snake;
 import snake.main;
 
 import javax.swing.*;
@@ -36,8 +38,8 @@ public class Layout extends JPanel {
   }
 
   private void paintCreature(ICreature creature, Graphics g) {
-    if (creature instanceof GoodSnake) {
-      paintSnake((GoodSnake) creature, g);
+    if (creature instanceof Snake) {
+      paintSnake((Snake) creature, g);
     } else {
       g.drawImage(creature.getImage(),
           creature.getCoordinates().getX() * main.CELL,
@@ -46,13 +48,13 @@ public class Layout extends JPanel {
     }
   }
 
-  private void paintSnake(GoodSnake goodSnake, Graphics g) {
-    g.drawImage(goodSnake.getHead().getImage(),
-        goodSnake.getHead().coordinates.getX() * main.CELL,
-        goodSnake.getHead().coordinates.getY() * main.CELL,
+  private void paintSnake(Snake snake, Graphics g) {
+    g.drawImage(snake.getHead().getImage(),
+        snake.getHead().coordinates.getX() * main.CELL,
+        snake.getHead().coordinates.getY() * main.CELL,
         main.CELL, main.CELL, this);
-    for (Point bodyCoordinates: goodSnake.getBodyCoordinates() ) {
-      g.drawImage(goodSnake.getBody().getImage(),
+    for (Point bodyCoordinates: snake.getBodyCoordinates() ) {
+      g.drawImage(snake.getBody().getImage(),
           bodyCoordinates.getX() * main.CELL,
           bodyCoordinates.getY() * main.CELL,
           main.CELL, main.CELL, this);

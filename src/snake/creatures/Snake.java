@@ -72,8 +72,19 @@ public class Snake implements IMovable, IPointSequence {
   public SnakeBody getBody() { return this.body; }
 
   @Override
-  public void makeMove() throws NotImplementedException {
-    throw new NotImplementedException("Yow must override this method");
+  public void makeMove() {
+    getBody().coordinates.remove(0);
+    getBody().coordinates.add(new Point(getHead().coordinates));
+
+    if (snakeDirection == Direction.Left) {
+      getHead().coordinates.setX(getHead().coordinates.getX() - 1);
+    } else if (snakeDirection == Direction.Right) {
+      getHead().coordinates.setX(getHead().coordinates.getX() + 1);
+    } else if (snakeDirection == Direction.Down) {
+      getHead().coordinates.setY(getHead().coordinates.getY() + 1);
+    } else if (snakeDirection == Direction.Up){
+      getHead().coordinates.setY(getHead().coordinates.getY() - 1);
+    }
   }
 
   public boolean isCollisionsExists() {

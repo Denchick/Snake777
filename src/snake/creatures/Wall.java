@@ -8,15 +8,17 @@ import java.awt.*;
 public class Wall implements ICreature {
 
   private Point coordinates;
-  private Image image ;
+  private Image image = (new ImageIcon("images/wall.png")).getImage();
+
+  public Wall() {
+    this.coordinates = new Point(0, 0);
+  }
 
   public Wall(int x, int y) {
-    image = (new ImageIcon("images/wall.png")).getImage();
     this.coordinates = new Point(x, y);
   }
 
   public Wall(Point coordinates) {
-    image = (new ImageIcon("images/wall.png")).getImage();
     this.coordinates = coordinates;
   }
 

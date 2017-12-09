@@ -39,21 +39,6 @@ public class GoodSnake extends Snake {
     return null;
   }
 
-  @Override
-  public void makeMove() {
-    super.getBody().coordinates.remove(0);
-    getBody().coordinates.add(new Point(getHead().coordinates));
-
-    if (snakeDirection == Direction.Left) {
-      getHead().coordinates.setX(getHead().coordinates.getX() - 1);
-    } else if (snakeDirection == Direction.Right) {
-      getHead().coordinates.setX(getHead().coordinates.getX() + 1);
-    } else if (snakeDirection == Direction.Down) {
-      getHead().coordinates.setY(getHead().coordinates.getY() + 1);
-    } else if (snakeDirection == Direction.Up){
-      getHead().coordinates.setY(getHead().coordinates.getY() - 1);
-    }
-  }
 }
 
 

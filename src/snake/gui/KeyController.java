@@ -15,7 +15,7 @@ public class KeyController implements KeyListener {
 
   public KeyController(Game game) {
     this.game = game;
-    this.snake = game.getSnake();
+    this.snake = game.getCreatureFromMap(Snake.class);
   }
 
   @Override

@@ -24,7 +24,7 @@ class SnakeTest {
 
   @Test
   void makeMove() {
-    Snake snake = game.getSnake();
+    Snake snake = game.getCreatureFromMap(Snake.class);
     List<Point> coordinates = snake.getBodyCoordinates();
     snake.setDirection(Direction.Right);
 
@@ -36,7 +36,7 @@ class SnakeTest {
 
   @Test
   void increase() {
-      Snake snake = game.getSnake();
+      Snake snake = game.getCreatureFromMap(Snake.class);
       int lenght = snake.getBodyCoordinates().size();
       snake.increase();
       assertEquals(lenght+1, snake.getBodyCoordinates().size());
@@ -44,7 +44,7 @@ class SnakeTest {
 
     @Test
     void decrease() {
-        Snake snake = game.getSnake();
+        Snake snake = game.getCreatureFromMap(Snake.class);
         int lenght = snake.getBodyCoordinates().size();
         snake.decrease();
         assertEquals(lenght-1, snake.getBodyCoordinates().size());

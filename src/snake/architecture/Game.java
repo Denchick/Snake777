@@ -21,28 +21,10 @@ public class Game {
 
   public boolean isPause() { return isPause; }
 
-  public Snake getSnake() {
+  public <T extends ICreature> T getCreatureFromMap(Class<T> cretureType) {
     for (ICreature creature : map.creatures) {
-      if (creature instanceof Snake) {
-        return (Snake) creature;
-      }
-    }
-    return null;
-  }
-
-  public Apple getApple() {
-    for (ICreature creature : map.creatures) {
-      if (creature instanceof Apple) {
-        return (Apple) creature;
-      }
-    }
-    return null;
-  }
-
-  public Mushroom getMushroom() {
-    for (ICreature creature : map.creatures) {
-      if (creature instanceof Mushroom) {
-        return (Mushroom) creature;
+      if (cretureType.isInstance(creature)) {
+        return (T)creature;
       }
     }
     return null;
@@ -60,25 +42,6 @@ public class Game {
     }
     return null;
   }
-
-  public Wall getWall() {
-    for (ICreature creature : map.creatures) {
-      if (creature instanceof Wall) {
-        return (Wall) creature;
-      }
-    }
-    return null;
-  }
-
-
-  public Game(int width, int height) {
-    map = new Map(width, height);
-    createSnakeOnMap();
-    createMushroomOnMap();
-    createAppleOnMap();
-    createWallOnMap();
-  }
-
 
   private void createAppleOnMap() {
     while (true) {
@@ -106,6 +69,15 @@ public class Game {
     }
   }
 
+  public Game(int width, int height) {
+    map = new Map(width, height);
+    createSnakeOnMap();
+    createMushroomOnMap();
+    createAppleOnMap();
+    createWallOnMap();
+  }
+
+
   private void createWallOnMap() {
     while (true) {
       Point coordinates = new Point(
@@ -128,72 +100,44 @@ public class Game {
     coordinates.add(center);
     coordinates.add(rightDot);
 
-    Snake snake = new Snake(coordinates);
-    map.setCreatureOnMap(snake);
-  }
-
-  private boolean checkAppleWasEaten() {
-    Apple apple = getApple();
-    //ICreature food = getFood();
-    if (apple == null) return true;
-    return getSnake().getHeadCoordinates().equals(apple.getCoordinates());
-  }
-
-  private boolean checkMushroomWasEaten() {
-    Mushroom mushroom = getMushroom();
-    if (mushroom == null) return true;
-    return getSnake().getHeadCoordinates().equals(mushroom.getCoordinates());
+    map.setCreatureOnMap(new Snake(coordinates));
   }
 
   private boolean checkFoodReachedTheEndOfSnake() {
-    Point foodCoordinates = getSnake().eatenFood.peek();
-
-    if (foodCoordinates != null)
-    System.out.println("Head: " + getSnake().getHeadCoordinates() + "\nEat: " + foodCoordinates + "\n"
-      );
-
+    Point foodCoordinates = getCreatureFromMap(Snake.class).eatenFood.peek();
+    Snake snake = getCreatureFromMap(Snake.class);
     return foodCoordinates != null
-        && !getSnake().getHeadCoordinates().equals(foodCoordinates)
-        && !getSnake().getBodyCoordinates().contains(foodCoordinates);
+        && !snake.getHeadCoordinates().equals(foodCoordinates)
+        && !snake.getBodyCoordinates().contains(foodCoordinates);
   }
 
   private boolean checkWallHitSnake() {
-    Wall wall = getWall();
-    return wall.getCoordinates().equals(getSnake().getHeadCoordinates());
+    Wall wall = getCreatureFromMap(Wall.class);
+    return wall.getCoordinates().equals(getCreatureFromMap(Snake.class).getHeadCoordinates());
   }
 
-  private boolean checkSnakeCollisionsExists() {
-    List<Point> snakeCoordinates = getSnake().getBodyCoordinates();
-    for (int i = 0; i < snakeCoordinates.size(); i++) {
-      for (int j = 0; j < snakeCoordinates.size(); j++) {
-        if (i != j && snakeCoordinates.get(i).equals(snakeCoordinates.get(j))) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
+
 
   public void makeOneStep() {
     if (isOver) return;
 
-    Snake snake = getSnake();
+    Snake snake = getCreatureFromMap(Snake.class);
     snake.makeMove();
 
     if (checkFoodWasEaten()) {
-      IFood food = getFoodByCoordinates(getSnake().getHeadCoordinates());
+      IFood food = getFoodByCoordinates(getCreatureFromMap(Snake.class).getHeadCoordinates());
       if (food instanceof Apple) {
-        Point coordinate = new Point(getSnake().getHeadCoordinates());
+        Point coordinate = new Point(getCreatureFromMap(Snake.class).getHeadCoordinates());
         snake.eatenFood.add(coordinate);
         createAppleOnMap();
       }
       if (food instanceof Mushroom)
-        food.ActionInConflict(getSnake());
+        food.ActionInConflict(getCreatureFromMap(Snake.class));
       map.DeleteCreatureFromMap(snake.getHeadCoordinates(), (ICreature) food);
+    }
 
-      if ((int) (Math.random()*4) == 0){
-        createMushroomOnMap();
-      }
+    if ((int) (Math.random()*25) == 0){
+      createMushroomOnMap();
     }
 
     if (checkFoodReachedTheEndOfSnake()) {
@@ -202,11 +146,7 @@ public class Game {
     }
     else needToIncreaseSnake = false;
 
-    if (checkSnakeCollisionsExists()) {
-      isOver = true;
-      return;
-    }
-    if (checkWallHitSnake()){
+    if (snake.isCollisionsExists() || checkWallHitSnake()) {
       isOver = true;
       return;
     }
@@ -215,7 +155,7 @@ public class Game {
       snake.increase();
     }
 
-    isOver = map.pointWithinMapBorders(getSnake().getHeadCoordinates());
+    isOver = map.pointWithinMapBorders(getCreatureFromMap(Snake.class).getHeadCoordinates());
   }
 
   private IFood getFoodByCoordinates(Point coordinates) {
@@ -228,7 +168,8 @@ public class Game {
 
   private boolean checkFoodWasEaten() {
     for (ICreature creature: map.creatures) {
-      if (creature instanceof IFood && creature.getCoordinates().equals(getSnake().getHeadCoordinates()))
+      if (creature instanceof IFood &&
+          creature.getCoordinates().equals(getCreatureFromMap(Snake.class).getHeadCoordinates()))
         return true;
     }
     return false;

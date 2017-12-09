@@ -12,6 +12,9 @@ public class Snake implements IMovable, IPointSequence {
 
   private final SnakeHead head;
   private final SnakeBody body;
+  public int getLenght() {
+    return 1 + body.coordinates.size();
+  }
   public Direction snakeDirection = Direction.Right;
   public Queue<Point> eatenFood = new ArrayDeque<Point>();
   @Override
@@ -84,6 +87,18 @@ public class Snake implements IMovable, IPointSequence {
     } else if (snakeDirection == Direction.Up){
       head.coordinates.setY(head.coordinates.getY() - 1);
     }
+  }
+
+  public boolean isCollisionsExists() {
+    List<Point> snakeCoordinates = this.getBodyCoordinates();
+    for (int i = 0; i < snakeCoordinates.size(); i++) {
+      for (int j = 0; j < snakeCoordinates.size(); j++) {
+        if (i != j && snakeCoordinates.get(i).equals(snakeCoordinates.get(j))) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public void increase() {

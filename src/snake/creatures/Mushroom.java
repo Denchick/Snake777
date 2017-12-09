@@ -50,8 +50,8 @@ public class Mushroom implements IFood, ICreature {
     }
 
     @Override
-    public void ActionInConflict(Snake snake) {
-        if (snake.getLenght() > 2)
-            snake.decrease();
+    public void ActionInConflict(GoodSnake goodSnake) {
+        if (goodSnake.getLength() > 2)
+            goodSnake.decrease();
     }
 }

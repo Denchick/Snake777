@@ -33,4 +33,35 @@ public class EnemySnake extends Snake {
   public Image getImage() {
     return null;
   }
+
+  public void setDirection(Point foodPoint)
+  {
+    Direction oldDir = getDirection();
+    Point start = getHead().coordinates;
+    if (start.getX() - foodPoint.getX() > 0)
+      setDirection(Direction.Left);
+    else if (start.getX() - foodPoint.getX() < 0)
+      setDirection(Direction.Right);
+    else if (start.getY() - foodPoint.getY() > 0)
+      setDirection(Direction.Up);
+    else
+      setDirection(Direction.Down);
+
+    if (isOppositeDirection(oldDir, getDirection()))
+      setDirection(SetOtherDir(getDirection()));
+  }
+
+  private Direction SetOtherDir(Direction a)
+  {
+    if (a == Direction.Up || a == Direction.Down) return Direction.Right;
+    return Direction.Up;
+  }
+
+  private boolean isOppositeDirection(Direction a, Direction b)
+  {
+    return a == Direction.Right && b== Direction.Left ||
+        a == Direction.Left && b == Direction.Right ||
+        a == Direction.Down && b == Direction.Up ||
+        a == Direction.Up && b == Direction.Down;
+  }
 }

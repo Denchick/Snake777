@@ -1,7 +1,9 @@
 package snake.creatures;
 
 public interface IFood {
-    boolean WasEaten();
-    void ActionInConflict(GoodSnake goodSnake);
+
+  boolean WasEaten();
+
+  void ActionInConflict(Snake Snake);
 }
 

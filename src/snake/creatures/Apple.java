@@ -52,7 +52,7 @@ public class Apple implements ICreature, IFood {
   }
 
   @Override
-  public void ActionInConflict(GoodSnake goodSnake) {
+  public void ActionInConflict(Snake snake) {
 
   }
 

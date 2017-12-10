@@ -39,6 +39,15 @@ public class GoodSnake extends Snake {
     return null;
   }
 
+  public void Cut(Point point)
+  {
+    List<Point> body = getBodyCoordinates();
+    int index = body.indexOf(point);
+    if (getHead().coordinates.equals(point) || index < 3) setBody(getBodyCoordinates().subList(0,1));
+    else
+      setBody(body.subList(0, index));
+  }
+
 }
 
 

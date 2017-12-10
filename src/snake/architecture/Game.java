@@ -2,7 +2,6 @@ package snake.architecture;
 
 import snake.creatures.*;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +20,9 @@ public class Game {
 
   public boolean isPause() { return isPause; }
 
-  public <T extends ICreature> T getCreatureFromMap(Class<T> cretureType) {
+  public <T extends ICreature> T getCreatureFromMap(Class<T> creatureType) {
     for (ICreature creature : map.creatures) {
-      if (cretureType.isInstance(creature)) {
+      if (creatureType.isInstance(creature)) {
         return (T)creature;
       }
     }
@@ -76,57 +75,88 @@ public class Game {
     map.setCreatureOnMap(new GoodSnake(coordinates));
   }
 
-  private boolean checkFoodReachedTheEndOfSnake() {
-    Point foodCoordinates = getCreatureFromMap(GoodSnake.class).eatenFood.peek();
-    GoodSnake goodSnake = getCreatureFromMap(GoodSnake.class);
+  private boolean checkFoodReachedTheEndOfSnake(Snake snake) {
+    Point foodCoordinates = getCreatureFromMap(snake.getClass()).eatenFood.peek();
     return foodCoordinates != null
-        && !goodSnake.getHead().coordinates.equals(foodCoordinates)
-        && !goodSnake.getBody().coordinates.contains(foodCoordinates);
+        && !snake.getHead().coordinates.equals(foodCoordinates)
+        && !snake.getBody().coordinates.contains(foodCoordinates);
   }
 
-  private boolean checkWallHitSnake() {
+  private boolean checkWallHitSnake(Snake snake) {
     Wall wall = getCreatureFromMap(Wall.class);
-    return wall.getCoordinates().equals(getCreatureFromMap(GoodSnake.class).getHead().coordinates);
+    return wall.getCoordinates().equals(getCreatureFromMap(snake.getClass()).getHead().coordinates);
   }
 
   public void makeOneStep() {
     if (isOver) return;
 
     GoodSnake goodSnake = getCreatureFromMap(GoodSnake.class);
-    goodSnake.makeMove();
+    EnemySnake enemySnake = getCreatureFromMap(EnemySnake.class);
+    enemySnake.setDirection(getCreatureFromMap(Apple.class).getCoordinates());
 
-    if (checkFoodWasEaten()) {
-      IFood food = getFoodByCoordinates(getCreatureFromMap(GoodSnake.class).getHead().coordinates);
-      if (food instanceof Apple) {
-        Point coordinate = new Point(getCreatureFromMap(GoodSnake.class).getHead().coordinates);
-        goodSnake.eatenFood.add(coordinate);
-        putCreatureOnMap(new Apple());
-      }
-      if (food instanceof Mushroom)
-        food.ActionInConflict(getCreatureFromMap(GoodSnake.class));
-      map.DeleteCreatureFromMap(goodSnake.getHead().coordinates, (ICreature) food);
+    MakeStepForSpecificSnake(goodSnake);
+    MakeStepForSpecificSnake(enemySnake);
+
+    if (GetFirstSnakeIntersectsSecond(goodSnake, enemySnake))
+      isOver = true;
+    if (GetFirstSnakeIntersectsSecond(enemySnake, goodSnake))
+      goodSnake.Cut(enemySnake.getHead().coordinates);
+  }
+
+  private void MakeStepForSpecificSnake(Snake snake)
+  {
+    snake.makeMove();
+    if (isOver) return;
+
+    if (checkFoodCanBeEaten(snake)) {
+      TryEatFood(snake);
     }
 
     if ((int) (Math.random()*25) == 0){
       putCreatureOnMap(new Mushroom());
     }
 
-    if (checkFoodReachedTheEndOfSnake()) {
+    if (checkFoodReachedTheEndOfSnake(snake)) {
       needToIncreaseSnake = true;
-      goodSnake.eatenFood.poll();
+      snake.eatenFood.poll();
     }
     else needToIncreaseSnake = false;
 
-    if (goodSnake.isCollisionsExists() || checkWallHitSnake()) {
+    if ((snake.isCollisionsExists() || checkWallHitSnake(snake)) &&
+        !snake.getClass().isInstance(EnemySnake.class)) {
       isOver = true;
       return;
     }
 
     if (needToIncreaseSnake) {
-      goodSnake.increase();
+      snake.increase();
     }
 
-    isOver = map.pointWithinMapBorders(getCreatureFromMap(GoodSnake.class).getHead().coordinates);
+    isOver = map.pointWithinMapBorders(getCreatureFromMap(snake.getClass()).getHead().coordinates);
+  }
+
+  private boolean GetFirstSnakeIntersectsSecond(Snake snake1, Snake snake2)
+  {
+    return snake2.getBody().coordinates.contains(snake1.getHead().coordinates)
+        || snake2.getHead().coordinates.equals(snake1.getHead().coordinates);
+  }
+
+  private void TryEatFood(Snake snake)
+  {
+    Boolean wasEaten = false;
+    IFood food = getFoodByCoordinates(getCreatureFromMap(snake.getClass()).getHead().coordinates);
+    if (food instanceof Apple) {
+      Point coordinate = new Point(getCreatureFromMap(snake.getClass()).getHead().coordinates);
+      snake.eatenFood.add(coordinate);
+      putCreatureOnMap(new Apple());
+      wasEaten = true;
+    }
+    if (food instanceof Mushroom) {
+      food.ActionInConflict(getCreatureFromMap(snake.getClass()));
+      wasEaten = true;
+    }
+    if (wasEaten)
+      map.DeleteCreatureFromMap(snake.getHead().coordinates, (ICreature) food);
   }
 
   private IFood getFoodByCoordinates(Point coordinates) {
@@ -137,11 +167,10 @@ public class Game {
     return null;
   }
 
-  private boolean checkFoodWasEaten() {
+  private boolean checkFoodCanBeEaten(Snake snake) {
     for (ICreature creature: map.creatures) {
-      if (creature instanceof IFood && (
-          creature.getCoordinates().equals(getCreatureFromMap(GoodSnake.class).getHead().coordinates) ||
-          creature.getCoordinates().equals(getCreatureFromMap(EnemySnake.class).getHead().coordinates)))
+      if (creature instanceof IFood &&
+          creature.getCoordinates().equals(getCreatureFromMap(snake.getClass()).getCoordinates()))
         return true;
     }
     return false;

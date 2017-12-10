@@ -1,5 +1,6 @@
 package snake.creatures;
 
+import java.util.ArrayList;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import snake.architecture.Direction;
 import snake.architecture.Point;
@@ -70,6 +71,10 @@ public class Snake implements IMovable, IPointSequence {
 
   public SnakeHead getHead() { return this.head; }
   public SnakeBody getBody() { return this.body; }
+
+  public void setBody(List<Point> bodyCoordinates) {
+    this.body.SetBody(bodyCoordinates);
+  }
 
   @Override
   public void makeMove() {

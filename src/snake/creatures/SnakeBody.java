@@ -1,5 +1,6 @@
 package snake.creatures;
 
+import java.util.ArrayList;
 import snake.architecture.Point;
 
 import javax.swing.*;
@@ -11,6 +12,11 @@ public class SnakeBody {
   private Image image;
   public Image getImage() {
     return image;
+  }
+
+  public void SetBody(List<Point> body)
+  {
+    coordinates = body;
   }
 
   public SnakeBody(List<Point> snake, String imageFilename) {

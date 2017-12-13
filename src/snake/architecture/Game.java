@@ -92,7 +92,7 @@ public class Game {
 
     GoodSnake goodSnake = getCreatureFromMap(GoodSnake.class);
     EnemySnake enemySnake = getCreatureFromMap(EnemySnake.class);
-    enemySnake.setDirection(getCreatureFromMap(Apple.class).getCoordinates());
+//    enemySnake.setDirection(getCreatureFromMap(Apple.class).getCoordinates());
 
     MakeStepForSpecificSnake(goodSnake);
     MakeStepForSpecificSnake(enemySnake);

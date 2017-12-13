@@ -34,7 +34,7 @@ public class EnemySnake extends Snake {
     return null;
   }
 
-  public void setDirection(Point foodPoint)
+  public void setDirectionForAI(Point foodPoint)
   {
     Direction oldDir = getDirection();
     Point start = getHead().coordinates;

@@ -7,18 +7,19 @@ import snake.creatures.GoodSnake;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import snake.creatures.SecondSnake;
 
 
 public class KeyController implements KeyListener {
 
   private Game game;
   private GoodSnake goodSnake;
-  private EnemySnake enemySnake;
+  private SecondSnake secondSnake;
 
   public KeyController(Game game) {
     this.game = game;
     this.goodSnake = game.getCreatureFromMap(GoodSnake.class);
-    this.enemySnake = game.getCreatureFromMap(EnemySnake.class);
+    this.secondSnake = game.getCreatureFromMap(SecondSnake.class);
   }
 
   @Override
@@ -50,23 +51,23 @@ public class KeyController implements KeyListener {
         }
         break;
       case KeyEvent.VK_W:
-      if (enemySnake.getDirection() != Direction.Down){
-        enemySnake.setDirection(Direction.Up);
+      if (secondSnake.getDirection() != Direction.Down){
+        secondSnake.setDirection(Direction.Up);
       }
       break;
       case KeyEvent.VK_S:
-        if(enemySnake.getDirection() != Direction.Up) {
-          enemySnake.setDirection(Direction.Down);
+        if(secondSnake.getDirection() != Direction.Up) {
+          secondSnake.setDirection(Direction.Down);
         }
         break;
       case KeyEvent.VK_A:
-        if (enemySnake.getDirection() != Direction.Right) {
-          enemySnake.setDirection(Direction.Left);
+        if (secondSnake.getDirection() != Direction.Right) {
+          secondSnake.setDirection(Direction.Left);
         }
         break;
       case KeyEvent.VK_D:
-        if (enemySnake.getDirection() != Direction.Left){
-          enemySnake.setDirection(Direction.Right);
+        if (secondSnake.getDirection() != Direction.Left){
+          secondSnake.setDirection(Direction.Right);
         }
         break;
     }

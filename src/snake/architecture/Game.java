@@ -46,6 +46,7 @@ public class Game {
     map = new Map(width, height);
     createGoodSnakeOnMap();
     createEnemySnakeOnMap();
+    createSecondSnakeOnMap();
     putCreatureOnMap(new Mushroom());
     putCreatureOnMap(new Apple());
     putCreatureOnMap(new Wall());
@@ -75,6 +76,18 @@ public class Game {
     map.setCreatureOnMap(new GoodSnake(coordinates));
   }
 
+  private void createSecondSnakeOnMap() {
+    Point center = new Point(map.Width / 2, map.Height / 2 + 4);
+    Point leftDot = new Point(center.getX() - 1, center.getY());
+    Point rightDot = new Point(center.getX() + 1, center.getY());
+    List<Point> coordinates = new ArrayList<>();
+    coordinates.add(leftDot);
+    coordinates.add(center);
+    coordinates.add(rightDot);
+
+    map.setCreatureOnMap(new SecondSnake(coordinates));
+  }
+
   private boolean checkFoodReachedTheEndOfSnake(Snake snake) {
     Point foodCoordinates = getCreatureFromMap(snake.getClass()).eatenFood.peek();
     return foodCoordinates != null
@@ -92,10 +105,12 @@ public class Game {
 
     GoodSnake goodSnake = getCreatureFromMap(GoodSnake.class);
     EnemySnake enemySnake = getCreatureFromMap(EnemySnake.class);
-//    enemySnake.setDirection(getCreatureFromMap(Apple.class).getCoordinates());
+    SecondSnake secondSnake = getCreatureFromMap(SecondSnake.class);
+    enemySnake.setDirectionForAI(getCreatureFromMap(Apple.class).getCoordinates());
 
     MakeStepForSpecificSnake(goodSnake);
     MakeStepForSpecificSnake(enemySnake);
+    MakeStepForSpecificSnake(secondSnake);
 
     if (GetFirstSnakeIntersectsSecond(goodSnake, enemySnake))
       isOver = true;

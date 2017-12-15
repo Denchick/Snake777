@@ -48,10 +48,10 @@ public class EnemySnake extends Snake {
       setDirection(Direction.Down);
 
     if (isOppositeDirection(oldDir, getDirection()))
-      setDirection(SetOtherDir(getDirection()));
+      setDirection(setOtherDir(getDirection()));
   }
 
-  private Direction SetOtherDir(Direction a)
+  private Direction setOtherDir(Direction a)
   {
     if (a == Direction.Up || a == Direction.Down) return Direction.Right;
     return Direction.Up;

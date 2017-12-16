@@ -5,7 +5,6 @@
 //import snake.architecture.Direction;
 //import snake.architecture.Game;
 //import snake.architecture.Point;
-//import snake.creatures.GoodSnake;
 //
 //import java.util.ArrayList;
 //import java.util.List;
@@ -24,7 +23,7 @@
 //
 //  @Test
 //  void makeMove() {
-//    GoodSnake goodSnake = game.getCreatureFromMap(GoodSnake.class);
+//    Snake goodSnake = game.getCreatureFromMap(Snake.class);
 //    List<Point> coordinates = goodSnake.getBodyCoordinates();
 //    goodSnake.setDirection(Direction.Right);
 //
@@ -36,7 +35,7 @@
 //
 //  @Test
 //  void increase() {
-//      GoodSnake goodSnake = game.getCreatureFromMap(GoodSnake.class);
+//      Snake goodSnake = game.getCreatureFromMap(Snake.class);
 //      int lenght = goodSnake.getBodyCoordinates().size();
 //      goodSnake.increase();
 //      assertEquals(lenght+1, goodSnake.getBodyCoordinates().size());
@@ -44,7 +43,7 @@
 //
 //    @Test
 //    void decrease() {
-//        GoodSnake goodSnake = game.getCreatureFromMap(GoodSnake.class);
+//        Snake goodSnake = game.getCreatureFromMap(Snake.class);
 //        int lenght = goodSnake.getBodyCoordinates().size();
 //        goodSnake.decrease();
 //        assertEquals(lenght-1, goodSnake.getBodyCoordinates().size());

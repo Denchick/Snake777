@@ -16,7 +16,7 @@ public class Snake implements IMovable, IPointSequence {
   private final SnakeBody body;
 
   public int getLength() { return 1 + body.coordinates.size(); }
-  public Queue<Point> eatenFood = new ArrayDeque<Point>();
+  public Queue<Point> eatenFood = new ArrayDeque<>();
   @Override
   public int getPriorityForGameHandle() {
     return 10;
@@ -102,6 +102,17 @@ public class Snake implements IMovable, IPointSequence {
       }
     }
     return false;
+  }
+
+  public void Cut(Point point)
+  {
+    List<Point> body = getBodyCoordinates();
+    int index = body.indexOf(point);
+    int last_ind = body.size()-1;
+    if (getHead().coordinates.equals(point)) setBody(getBodyCoordinates()
+        .subList(last_ind-1,last_ind));
+    else
+      setBody(body.subList(index, last_ind));
   }
 
   public void increase() {

@@ -2,24 +2,20 @@ package snake.gui;
 
 import snake.architecture.Direction;
 import snake.architecture.Game;
-import snake.creatures.EnemySnake;
-import snake.creatures.GoodSnake;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import snake.creatures.SecondSnake;
+import snake.creatures.Snake;
 
 
 public class KeyController implements KeyListener {
 
-  private Game game;
-  private GoodSnake goodSnake;
-  private SecondSnake secondSnake;
+  private Snake goodSnake;
+  private Snake secondSnake;
 
   public KeyController(Game game) {
-    this.game = game;
-    this.goodSnake = game.getCreatureFromMap(GoodSnake.class);
-    this.secondSnake = game.getCreatureFromMap(SecondSnake.class);
+    this.goodSnake = game.getCreatureFromMap(Snake.class, 0);
+    this.secondSnake = game.getCreatureFromMap(Snake.class, 1);
   }
 
   @Override

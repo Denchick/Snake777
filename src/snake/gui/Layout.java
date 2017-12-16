@@ -3,7 +3,6 @@ package snake.gui;
 import snake.architecture.Game;
 import snake.architecture.Point;
 import snake.creatures.EnemySnake;
-import snake.creatures.GoodSnake;
 import snake.creatures.ICreature;
 import snake.creatures.Snake;
 import snake.main;
